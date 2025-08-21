@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="theme-color" content="#025940" id="meta-theme-color" />
+	<title>IGetHouse Property Quiz</title>
+	<link rel="icon" href="./assets/logo.jpg" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<meta name="description" content="IGetHouse Property Quiz - Real estate trivia with a 15s timer. Test your knowledge!" />
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 antialiased" style="--brand:#025940; --brand-600:#014a37; --brand-700:#013a2b;">
+	<header class="border-b border-slate-200 bg-white/70 backdrop-blur sticky top-0 z-10">
+		<div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3">
+			<img id="brand-logo" src="./assets/logo.jpg" alt="IGetHouse Logo" class="h-20 w-20 object-contain select-none shadow bg-white p-1" />
+			<div class="flex items-baseline gap-2">
+				<span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-[var(--brand)] text-white">15s per question</span>
+			</div>
+			<div class="ml-auto flex items-center gap-2">
+				<a href="https://igethouse.ng" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium bg-[var(--brand)] text-white hover:bg-[var(--brand-600)] transition-colors">Visit IGetHouse</a>
+			</div>
+		</div>
+	</header>
+
+	<main class="max-w-5xl mx-auto px-4">
+		<section class="text-center">
+			<h1 class="mt-0 inline-block px-2 py-1 md:px-3 text-3xl md:text-4xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-[var(--brand)] to-[var(--brand-700)] bg-clip-text text-transparent">IGetHouse Property Quiz</h1>
+		</section>
+		<section class="mt-2 md:mt-3 grid md:grid-cols-[280px_1fr] gap-6 items-start">
+			<!-- Sidebar with Timer -->
+			<aside class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-5">
+				<div class="flex flex-col items-center">
+					<div class="relative">
+						<svg width="140" height="140" viewBox="0 0 140 140" class="-rotate-90">
+							<circle cx="70" cy="70" r="62" class="stroke-slate-200" stroke-width="12" fill="none"></circle>
+							<circle id="timer-progress" cx="70" cy="70" r="62" class="stroke-[var(--brand)]" stroke-linecap="round" stroke-width="12" fill="none" stroke-dasharray="390" stroke-dashoffset="0"></circle>
+						</svg>
+						<div class="absolute inset-0 flex items-center justify-center">
+							<div class="text-center">
+								<div id="timer-text" class="text-4xl font-bold tabular-nums">15</div>
+								<div class="text-xs text-slate-500">seconds</div>
+							</div>
+						</div>
+					</div>
+					<div class="mt-4 text-center text-sm text-slate-600">
+						Question <span id="progress-current" class="font-semibold">1</span> of <span id="progress-total" class="font-semibold">50</span>
+					</div>
+				</div>
+			</aside>
+
+			<!-- Quiz Card -->
+			<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 overflow-hidden">
+				<div class="px-5 py-4 border-b border-slate-100 bg-gradient-to-r from-white to-slate-50">
+					<h2 id="question-text" class="text-lg md:text-xl font-semibold leading-snug">Loading question...</h2>
+				</div>
+				<div class="p-5">
+					<div id="options-container" class="grid md:grid-cols-2 gap-3"></div>
+					<div class="mt-5 flex items-center justify-between">
+						<button id="skip-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-white transition-colors" aria-label="Skip question" title="Skip question">Skip</button>
+						<button id="next-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white bg-[var(--brand)] hover:bg-[var(--brand-600)] disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-white transition-colors" disabled>Next</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<!-- Result Modal -->
+	<div id="result-modal" class="fixed inset-0 z-50 hidden">
+		<div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+		<div class="relative max-w-md mx-auto mt-24 bg-white rounded-2xl shadow-xl ring-1 ring-slate-200 overflow-hidden">
+			<div class="p-6 text-center">
+				<img src="./assets/logo.jpg" alt="IGetHouse Logo" class="mx-auto h-14 w-14 rounded object-contain" />
+				<h3 class="mt-3 text-xl font-semibold">Great job!</h3>
+				<p class="mt-1 text-slate-600">You scored <span id="score-text" class="font-semibold text-[var(--brand)]">0</span> out of <span id="score-total" class="font-semibold">0</span>.</p>
+				<div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+					<a href="https://igethouse.ng" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium text-white bg-[var(--brand)] hover:bg-[var(--brand-600)] transition-colors">Visit IGetHouse</a>
+					<button id="play-again-btn" class="inline-flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium text-[var(--brand)] bg-[color:rgb(240,249,255)] hover:bg-[color:rgb(224,242,254)] ring-1 ring-[var(--brand)]/20 transition-colors">Play Again</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="./questions.js"></script>
+	<script src="./script.js"></script>
+</body>
+</html> 
